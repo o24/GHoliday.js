@@ -1,21 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" >
+
+<head>
+  <title>title</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <style>
+    .mb {
+      margin-bottom: 32px;
+    }
+  </style>
 
 
-  </head>
-  <body>
+</head>
 
-    <h1>hello</h1>
+<body>
+  <div class="container">
+    <div class="row text-center">
+      <h2>GHoliday.js デモ</h2>
+      <h4>Googleカレンダーから祝日取得するよ</h4>
+    </div>
+    <div class="mb"></div>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://o24.me/js/log.js"></script>
-    <script>
-      $(document).ready(function() {
+    <div class="panel panel-info">
+      <div class="panel-heading text-center">結果</div>
+      <div class="panel-body">
+        <div id="result"></div>
+      </div>
+    </div>
+
+    <div class="row mb">
+      <div class="col-xs-6 col-xs-offset-3">
+
+        <div class="panel panel-warning">
+
+          <div class="panel-heading text-center">祝日取得</div>
+
+          <div class="panel-body">
+            <form id="form" action="">
+              <div class="form-group">
+                <label for="">取得 開始日</label>
+                <input name="start_date" type="text" class="form-control" placeholder="yyyy-mm-dd" value="2016-01-01">
+              </div>
+              <div class="form-group">
+                <label for="">取得 終了日</label>
+                <input name="end_date" type="text" class="form-control" placeholder="yyyy-mm-dd" value="2016-12-31">
+              </div>
+              <button class="btn btn-success btn-block">取得！</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="">
+
+      </div>
+    </div>
+
+
+  </div>
+  <div id="template" class="hidden">
+    <pre></pre>
+  </div>
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/log.js"></script>
+  <script type="text/javascript" src="/js/jquery.serialize-hash.js"></script>
+
+  <script type="text/javascript" src="/js/g_holiday.js"></script>
+
+  <script>
+    $(function () {
+
+      $("#form").submit(function (event) {
+        // 結果リセット
+        $("#result").empty();
+        
+        var form_data = $(this).serializeHash();
+        var start_date = form_data.start_date;
+        var end_date = form_data.end_date;
+
+        GHoliday.getHoliday({
+          start_date: start_date,
+          end_date: end_date,
+          callback: function (error, res) {
+            Log.d(res);
+            if (error) {
+              alert("取得エラー!\nAPIキーは設定していますか？");
+              return;
+            }
+
+            $.each(res, function (index, item) {
+              var template = $("#template pre").clone();
+              var json_str = JSON.stringify(item);
+              template.append(json_str);
+
+              $("#result").append(template);
+
+            });
+          }
+        });
+
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
       });
-    </script>
-  </body>
+
+    });
+  </script>
+</body>
+
 </html>

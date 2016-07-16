@@ -1,42 +1,3 @@
-# GHoliday.js
-Googleカレンダー(V3)から祝日を取得します。
-
-## Required
-* jQuery
-検証済みバージョン: 2.1.1(`$.ajax()`が使えるバージョンならどのバージョンでも使えるはずです)
-
-## APIキー取得方法
-[Google API Console](https://console.developers.google.com/?hl=JA)にてGoogleカレンダー(V3)のAPIキーを発行してください
-
-APIキーの取得方法は[こちら](http://blog.o24.me/?p=954)を見て下さい
-
-## APIキー設定
-> g_holiday.js
-
-```
-GHoliday.API_KEY = "ここにAPIキーを設定してください";
-```
-
-## 使い方
-jQueryをロード後、`g_holiday.js`をロードしてください
-
-```
-<!-- html tag -->
-<script type="text/javascript" src="/js/jquery.min.js"></script>
-<script type="text/javascript" src="/js/g_holiday.js"></script>
-
-// code
-GHoliday.getHoliday({
-  start_date: "yyyy-mm-dd",
-  end_date: "yyyy-mm-dd",
-  callback: function (error, res) {
-    // 何か
-  }
-});
-```
-
-## LICENSE
-```
 The MIT License (MIT)
 
 Copyright (c) 2016 o24.me
@@ -57,4 +18,3 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```

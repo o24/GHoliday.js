@@ -1,7 +1,13 @@
 /**
  * Google カレンダーから祝日を取得する
+ *
+ * License : MIT
+ * 2016 o24.me
  **/
 var GHoliday = function () {};
+
+// APIキーを設定してください
+GHoliday.API_KEY = "APIキーを設定してください";
 
 GHoliday.DATE_SUFFIX = "T00%3A00%3A00.000Z";
 GHoliday.zeroPadding = function (num) {
@@ -23,11 +29,12 @@ GHoliday.formatDate = function (date, disabled_suffix) {
 };
 
 /**
- * @params
- * api_key : API for Google V3
- * start_date : "yyyy-mm-dd"
- * end_date : "yyyy-mm-dd"
- * callback : function(error, json)
+ * Googleカレンダーから祝日取得
+ *
+ * @params api_key : Googleカレンダー V3 の APIキー
+ * @params start_date : String "yyyy-mm-dd"
+ * @params end_date : String "yyyy-mm-dd"
+ * @params callback : function(error, Object<Array>)
  **/
 GHoliday.getHoliday = function (params) {
 
@@ -36,24 +43,21 @@ GHoliday.getHoliday = function (params) {
   if (params && params.api_key) {
     api_key = params.api_key;
   } else {
-    api_key = "AIzaSyBYhp__H_KU3ogZPGdJ12xns6EjLBLLVxQ";
+    api_key = GHoliday.API_KEY;
   }
 
   var today;
   if (params && params.start_date) {
-    today = Date.parse(params.start_date);
-    //start_date = params.start_date + "date_suffix";
+    today = new Date(params.start_date);
   } else {
     today = new Date();
   }
   start_date = GHoliday.formatDate(today);
 
   if (params && params.end_date) {
-    //end_date = params.end_date + "date_suffix";
-    today = Date.parse(params.end_date);
+    today = new Date(params.end_date);
   } else {
     today.setYear(today.getFullYear() + 1);
-    //start_date = GHoliday.formatDate(today);
   }
   end_date = GHoliday.formatDate(today);
 
